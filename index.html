@@ -29,7 +29,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>YouTube 3D v.4-2</title>
+	<title>YouTube 3D v.4-6</title>
 	<style>
 		
         body {
@@ -170,6 +170,23 @@
             
 		}
 
+        function enterFullscreen() {
+            var elem = document.documentElement;
+            if (elem.requestFullscreen) {
+            elem.requestFullscreen();
+            } else if (elem.mozRequestFullScreen) { // Firefox
+            elem.mozRequestFullScreen();
+            } else if (elem.webkitRequestFullscreen) { // Chrome, Safari and Opera
+            elem.webkitRequestFullscreen();
+            } else if (elem.msRequestFullscreen) { // IE/Edge
+            elem.msRequestFullscreen();
+            }
+            // Center the players vertically and horizontally
+            document.getElementById('video-container').style.position = 'absolute';
+            document.getElementById('video-container').style.top = '50%';
+            document.getElementById('video-container').style.left = '50%';
+            document.getElementById('video-container').style.transform = 'translate(-50%, -50%)';
+        }
 // Agrega un evento de escucha al presionar teclas de flecha
 		document.addEventListener("keydown", function(event) {
 			if (event.code === "ArrowUp") {
@@ -237,15 +254,21 @@
 <body>
 	
 	
-	<div id="form-container">
-		<form onsubmit="reproducirVideo(event)">
-			<label for="url">Ingresa la URL del video de YouTube:</label>
-			<input type="text" id="url" name="url">
-			<button type="submit">Reproducir</button>
-			<!-- <button type="button" onclick="sincronizarVideos()">Sincronizar Videos</button> -->
-			<button type="button" onclick="limpiarURL()">Limpiar</button>
-		</form>
-	</div>
+    <div id="form-container" style="display: flex; justify-content: space-between; width: 100%; max-width: 1280px;">
+        <div style="flex: 1; padding: 10px; border: 1px solid white; margin-right: 10px;">
+            <form onsubmit="reproducirVideo(event)">
+                <label for="url">Ingresa la URL del video de YouTube:</label>
+                <input type="text" id="url" name="url">
+                <button type="submit">Reproducir</button>
+                <!-- <button type="button" onclick="sincronizarVideos()">Sincronizar Videos</button> -->
+            </form>
+        </div>
+        
+        <div style="flex: 1; padding: 10px; border: 1px solid white; margin-left: 10px;">
+            <button type="button" onclick="limpiarURL()">Limpiar</button> 
+            <button type="button" onclick="enterFullscreen()">Pantalla Completa</button>
+        </div>
+    </div>
 
 	<div id="video-container">
 		<div id="player1"></div>
@@ -277,7 +300,4 @@
 
 </body>
 </html>
-
-
-
 
