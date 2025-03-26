@@ -27,8 +27,6 @@
 
 -->
 
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -254,22 +252,27 @@
 		<div id="player1"></div>
 		<div id="player2"></div>
 	</div>
-	
+		
 	
 
-	<div id="textitos">
-		Flecha arriba 		= Sincroniza Videos<br>
-		Flecha izquierda 	= Desfase Izquierda<br>
-		Flecha Derecha 		= Desfase Derecha<br>
-		
-		Tecla 'q' 			= izquierda grande<br>
-		tecla 'w'			= derecha grande<br>
-		<!-- Tecla 'a'			= izquierda chica<br>
-		tecla 's'			= derecha chica<br>
-		-->
-		Tecla 'z' 			= Retrocede 5 segundos<br> 
-		Tecla 'x' 			= Avanza 5 segundos<br>
-		Tecla 'Espacio'		= Play/Pausa<br>
+	<div id="textitos" style="display: flex; justify-content: space-between; width: 100%; max-width: 1280px;">
+		<div style="flex: 1; padding: 10px; border: 1px solid white; margin-right: 10px;">
+			Tecla 'q' = izquierda grande<br>
+			tecla 'w' = derecha grande<br>
+			<!-- Tecla 'a' = izquierda chica<br>
+			tecla 's' = derecha chica<br> -->
+			Tecla 'z' = Retrocede 5 segundos<br>
+			Tecla 'x' = Avanza 5 segundos<br>
+			
+		</div>
+
+		<div style="flex: 1; padding: 10px; border: 1px solid white; margin-left: 10px;">
+			Flecha arriba = Sincroniza Videos<br>
+			Flecha izquierda = Desfase Izquierda<br>
+			Flecha Derecha = Desfase Derecha<br>
+			Tecla 'Espacio' = Play/Pausa<br>
+			
+		</div>
 	</div>
 
 
@@ -277,5 +280,3 @@
 </html>
 
 
-
-</html>
