@@ -1,15 +1,16 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html>
 <head>
   <title>Ejemplo de Frames</title>
 </head>
 <!-- <body style="display: grid; grid-template-columns: 1fr 1fr; grid-gap: 10px;">   -->
+<!--
 <body>
   <!-- Banner de Navegación -->
-    <div id="banner" style="display: flex; position: fixed; top: 0; left: 0; right: 0;">
+<!--    <div id="banner" style="display: flex; position: fixed; top: 0; left: 0; right: 0;">
 
   <!--<div id="banner" style="display: flex;">-->
-    <ul style="display: flex; list-style-type: none;">
+<!--    <ul style="display: flex; list-style-type: none;">
       <li style="margin-right: 10px;"><a href="acerca.html" target="contenido">ACERCA</a></li>
       <li style="margin-right: 10px;"><a href="contacto2.html" target="contenido">CUCU</a></li>
       <li style="margin-right: 10px;"><a href="contacto3.html" target="contenido">CONTENIDO 3</a></li>
@@ -18,10 +19,263 @@
 
   <!-- Frame para el contenido -->
    <!-- <iframe src="base.html" name="contenido" style="width: 100%; height: 500px;"></iframe> -->
-  <iframe src="base.html" name="contenido" style="width: 100%; height: 1000px;"></iframe>
+<!--  <iframe src="base.html" name="contenido" style="width: 100%; height: 1000px;"></iframe>
 
 
 
 </body>
+
+-->
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Reproductor de videos de YouTube</title>
+	<style>
+		
+        body {
+  
+			background-color: gray;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				
+				/*height: 100vh;*/
+				margin: 0; 
+
+
+
+				justify-content: space-between; /*center*/
+				width: 100%;
+				max-width: 1280px;
+				margin-top: auto;
+				margin-bottom: 0vh; /* aumenta la altura en un 20% */
+
+			color: white;
+			}
+
+		label {
+			color: white;
+		}
+
+		#video-container {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+			max-width: 1280px;
+		}
+
+		#player1 {
+			margin-right: 10px;
+		}
+
+		#player2 {
+			margin-left: 10px;
+		}
+
+		form {
+			display: flex;
+			flex-direction: column;
+			align-items: left;
+			justify-content: left;
+		}
+
+		label, input, button {
+			margin: 5px 0;
+		}
+		textitos {
+			align-items: left;
+			color: white;
+		}
+	</style>
+	
+	
+	<script src="https://www.youtube.com/iframe_api"></script>
+	<script>
+		var player1, player2;
+
+		function onYouTubeIframeAPIReady() {
+			player1 = new YT.Player('player1', {
+				height: '360',
+				width: '640',
+				events: {
+					'onReady': onPlayerReady
+				}
+			});
+			
+			player2 = new YT.Player('player2', {
+				height: '360',
+				width: '640',
+				events: {
+					'onReady': onPlayerReady
+				}
+			});
+		}
+
+		function onPlayerReady(event) {
+			if (event.target.id == 'player1') {
+				event.target.setVolume(100);
+			}
+			if (event.target.id == 'player2') {
+				event.target.setVolume(0);
+			}
+		}
+
+		function reproducirVideo(event) {
+			event.preventDefault();
+			var url = document.getElementById('url').value;
+			var videoId = url.split('v=')[1];
+			player1.loadVideoById(videoId);
+			player2.loadVideoById(videoId);
+		}
+
+		function limpiarURL() {
+			document.getElementById('url').value = "";
+		}
+
+		function sincronizarVideos() {
+			player2.seekTo(player1.getCurrentTime()+0.00);
+		}
+
+        function desfaseRigthVideos() {
+            sincronizarVideos()
+			player2.seekTo(player1.getCurrentTime()+0.50);
+		}
+
+        function desfaseRigthVideosGrande() {
+            sincronizarVideos()
+			player2.seekTo(player1.getCurrentTime()+1.00);
+		}
+
+        function desfaseLeftVideos() {
+            sincronizarVideos()
+			player2.seekTo(player1.getCurrentTime()-0.2);
+		}
+
+        function desfaseLeftVideosGrande() {
+            sincronizarVideos()
+			player2.seekTo(player1.getCurrentTime()-1.0);
+		}
+
+
+        function mueveadelante() {
+            sincronizarVideos()
+			player1.seekTo(player2.getCurrentTime()+5);
+            player2.seekTo(player1.getCurrentTime()+5);
+            
+		}
+        function mueveatras() {
+            sincronizarVideos()
+			player1.seekTo(player2.getCurrentTime()-5);
+            player2.seekTo(player1.getCurrentTime()-5);
+            
+		}
+
+// Agrega un evento de escucha al presionar teclas de flecha
+		document.addEventListener("keydown", function(event) {
+			if (event.code === "ArrowUp") {
+				// Sincroniza los dos videos
+				sincronizarVideos();
+
+			} else if (event.code === "ArrowRight") {
+				//  derecha 
+
+				desfaseRigthVideos();
+
+			} else if (event.code === "ArrowLeft") {
+				//  izquierda 
+				desfaseLeftVideos();
+				
+				
+			} else if (event.keyCode === 83) {
+				// derecha chica con tecla 's'
+				desfaseRigthVideos();
+				
+			} else if (event.keyCode === 65) {
+				//  izquierda  grande tecla 'a'
+				desfaseLeftVideos();	
+				
+				
+			
+
+			} else if (event.keyCode === 87) {
+				// derecha grande con tecla 'w'
+				desfaseRigthVideosGrande();
+				
+			} else if (event.keyCode === 81) {
+				//  izquierda  grande tecla 'q'
+				desfaseLeftVideosGrande();
+				
+				
+		   } else if (event.keyCode === 88) {
+				// Adelanta video 5 seg con tecla 'x'
+				mueveadelante();
+
+			} else if (event.keyCode === 90) {
+				// Retroce video -5 seg con tecla 'z'
+				mueveatras();
+				
+			} else if (event.code === "Space") {
+				// Play/Pausa video con tecla 'Space'
+				if (player1.getPlayerState() == YT.PlayerState.PLAYING) {
+					player1.pauseVideo();
+					player2.pauseVideo();
+				} else {
+					sincronizarVideos()
+					player1.playVideo();
+					player2.playVideo();
+					
+				}
+			}
+		});
+
+
+	</script>
+</head>
+
+
+
+<body>
+	
+	
+	<div id="form-container">
+		<form onsubmit="reproducirVideo(event)">
+			<label for="url">Ingresa la URL del video de YouTube:</label>
+			<input type="text" id="url" name="url">
+			<button type="submit">Reproducir</button>
+			<!-- <button type="button" onclick="sincronizarVideos()">Sincronizar Videos</button> -->
+			<button type="button" onclick="limpiarURL()">Limpiar</button>
+		</form>
+	</div>
+
+	<div id="video-container">
+		<div id="player1"></div>
+		<div id="player2"></div>
+	</div>
+	
+	
+
+	<div id="textitos">
+		Flecha arriba 		= Sincroniza Videos<br>
+		Flecha izquierda 	= Desfase Izquierda<br>
+		Flecha Derecha 		= Desfase Derecha<br>
+		
+		Tecla 'q' 			= izquierda grande<br>
+		tecla 'w'			= derecha grande<br>
+		<!-- Tecla 'a'			= izquierda chica<br>
+		tecla 's'			= derecha chica<br>
+		-->
+		Tecla 'z' 			= Retrocede 5 segundos<br> 
+		Tecla 'x' 			= Avanza 5 segundos<br>
+		Tecla 'Espacio'		= Play/Pausa<br>
+	</div>
+
+
+</body>
+</html>
+
+
 
 </html>
